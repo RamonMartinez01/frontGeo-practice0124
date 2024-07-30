@@ -12,7 +12,7 @@ const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 50;
-
+  const [selectedMarker, setSelectedMarker] = useState(null);
   const escuelas = useSelector((state) => state.escuelas);
   const dispatch = useDispatch();
 
@@ -41,6 +41,11 @@ const HomePage = () => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  const handleCardClick = (index) => {
+    setSelectedMarker((selectedMarker) => (
+      selectedMarker === index ? null : index
+    ));
+  };
 
   return (
     <div>
@@ -49,8 +54,11 @@ const HomePage = () => {
       <div className='results-info'>
         <h3>Results: {filteredEscuelas.length}</h3>
         <ul className='results__ul'>
-          {currentItems.map((escuela) => (
-            <li className='results__card' key={escuela.id}>
+          {currentItems.map((escuela, index) => (
+            <li className={`results__card ${selectedMarker === index  ? 'selected' : ''}`}
+            key={escuela.id}
+            onClick={() => handleCardClick(index)}
+            >
               <strong>{escuela.Nombre}</strong> - {escuela.Domicilio}
             </li>
           ))}
@@ -64,7 +72,10 @@ const HomePage = () => {
       <div>
         Showing {currentItems.length} of {filteredEscuelas.length} results
       </div>
-      <Map escuelas={currentItems} />
+      <Map escuelas={currentItems}
+      selectedMarker={selectedMarker}
+      setSelectedMarker={setSelectedMarker}
+      />
       
     </div>
   );

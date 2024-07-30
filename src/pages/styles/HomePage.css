@@ -39,6 +39,7 @@
     width: calc(33.333% - 10px); /* Three cards per row with some gap */
     box-sizing: border-box;
     transition: transform 0.3s;
+    cursor: pointer;
   }
   
   .results__card:hover {
@@ -55,4 +56,8 @@
   .results__card:hover {
     border-color: #aaa;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  .results__card.selected {
+    background-color: #cebee4;
+    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
   }

@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .APP {
+    text-align: center;
+  }
+  
+  .loading__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .filter-bar, .search-bar {
+    margin: 20px;
+  }

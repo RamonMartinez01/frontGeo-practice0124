@@ -5,6 +5,7 @@ import Map from '../components/mapComponents/Map';
 import SearchBar from '../components/mapComponents/SearchBar';
 import CategoryFilter from '../components/mapComponents/CategoryFilter';
 import Pagination from '../components/pagination/Pagination';
+import './styles/HomePage.css'
 
 const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -47,23 +48,24 @@ const HomePage = () => {
       <SearchBar setSearchTerm={setSearchTerm} />
       <div className='results-info'>
         <h3>Results: {filteredEscuelas.length}</h3>
-        <ul>
+        <ul className='results__ul'>
           {currentItems.map((escuela) => (
-            <li key={escuela.id}>
+            <li className='results__card' key={escuela.id}>
               <strong>{escuela.Nombre}</strong> - {escuela.Domicilio}
             </li>
           ))}
         </ul>
       </div>
-      <div>
-        Showing {currentItems.length} of {filteredEscuelas.length} results
-      </div>
-      <Map escuelas={currentItems} />
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         handlePageChange={handlePageChange}
       />
+      <div>
+        Showing {currentItems.length} of {filteredEscuelas.length} results
+      </div>
+      <Map escuelas={currentItems} />
+      
     </div>
   );
 };

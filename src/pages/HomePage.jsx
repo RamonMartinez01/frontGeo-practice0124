@@ -59,7 +59,8 @@ const HomePage = () => {
             key={escuela.id}
             onClick={() => handleCardClick(index)}
             >
-              <strong>{escuela.Nombre}</strong> - {escuela.Domicilio}
+              <span className='results__name'><strong>{escuela.Nombre}</strong></span>
+              <span className='results__address'>{escuela.Domicilio}</span>
             </li>
           ))}
         </ul>

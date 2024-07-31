@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import { defaultIcon, highlightedIcon, selectedIcon } from '../../utils/markerIcons';
 
+
 const Map = ({ escuelas, selectedMarker, setSelectedMarker }) => {
   const [hoveredMarker, setHoveredMarker] = useState(null);
+  const markerRef = useRef([]);
 
   const handleMarkerMouseOver = (index) => {
     setHoveredMarker(index);
@@ -20,6 +22,15 @@ const Map = ({ escuelas, selectedMarker, setSelectedMarker }) => {
     ));
   };
 
+    /*  --Esto sincroniza el popUp con el click en la card 
+    constinúa la lógica al final del código en ``Marker`` con ref---*/
+  useEffect(() => {
+    if (selectedMarker !== null ) {
+      markerRef.current[selectedMarker].openPopup();
+    }else { 
+      markerRef.current.forEach(ref => ref && ref.closePopup());
+    }
+  }, [selectedMarker]) 
 
   return (
     <MapContainer 
@@ -45,7 +56,8 @@ const Map = ({ escuelas, selectedMarker, setSelectedMarker }) => {
             mouseout: handleMarkerMouseOut,
             click: () => handleMarkerClick(index),
           }}  
-      >
+          ref={el => markerRef.current[index] = el}
+        >
           <Popup>
             <strong>{escuela.Nombre}</strong>
             <br />

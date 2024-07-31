@@ -81,6 +81,7 @@ const HomePage = () => {
         currentPage={currentPage}
         totalPages={totalPages}
         handlePageChange={handlePageChange}
+        setSelectedMarker={setSelectedMarker}
       />
       <div>
         Showing {currentItems.length} of {filteredEscuelas.length} results

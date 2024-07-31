@@ -6,7 +6,7 @@ const CategoryFilter = ({ selectedCategory, setSelectedCategory }) => {
     return (
       <div className="filter-bar">
         <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
-          <option value="">All Categories</option>
+          <option value="">Todas las categorías</option>
           {categories.map((category, index) => (
             <option key={index} value={category}>
               {category}

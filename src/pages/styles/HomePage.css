@@ -18,18 +18,22 @@
     flex-wrap: nowrap;
     align-items: center;
     list-style-type: none;
-    height: 14em;
+    height: 16.5em;
     padding: 0;
     overflow-x: hidden;
     overflow-y: visible;
     gap: 0.5em;
     position: relative;
-    background-color: aquamarine;
+    background-color: rgb(182, 215, 240);
   }
   .results-info ul strong {
     color: #333;
   }
   .results__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     min-width: 15em;
     max-width: 16em;
     height: 10.5em;
@@ -39,11 +43,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 15px;
     box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s;
+    transition: transform 0.3s, max-height 1.5s ease;
     position: relative;
     cursor: pointer;
     z-index: 3;
@@ -51,16 +51,19 @@
   
   .results__card:hover {
     transform: translateY(-5px);
-    height: auto;
+    max-height: 19em;
   }
   .results__card:hover > .results__address {
     opacity: 1;
     max-height: 200px;
   }
+  .results__name {
+    font-size: small;
+  }
   .results__address {
     opacity: 0;
     max-height: 0;
-    right: -2;
+    font-size: small;
     overflow: hidden;
     transition: opacity 0.5s ease, max-height 0.5s ease;
   }
@@ -77,6 +80,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
   .results__card.selected {
-    background-color: #cebee4;
+    background-color: #8d99f6bd;
     box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
   }

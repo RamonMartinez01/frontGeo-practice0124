@@ -2,7 +2,7 @@ import L from 'leaflet'
 
 //icon base (default)
 const defaultIcon = L.icon({
-    iconUrl: 'public/pin-azul.png',
+    iconUrl: '/pin-azul.png',
     iconSize: [25, 41], // Size of the icon
     iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
     popupAnchor: [1, -34],

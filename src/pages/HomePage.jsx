@@ -5,13 +5,14 @@ import Map from '../components/mapComponents/Map';
 import SearchBar from '../components/mapComponents/SearchBar';
 import CategoryFilter from '../components/mapComponents/CategoryFilter';
 import Pagination from '../components/pagination/Pagination';
+import './styles/HomePage.css'
 
 const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 50;
-
+  const [selectedMarker, setSelectedMarker] = useState(null);
   const escuelas = useSelector((state) => state.escuelas);
   const dispatch = useDispatch();
 
@@ -40,6 +41,11 @@ const HomePage = () => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  const handleCardClick = (index) => {
+    setSelectedMarker((selectedMarker) => (
+      selectedMarker === index ? null : index
+    ));
+  };
 
   return (
     <div>
@@ -47,23 +53,31 @@ const HomePage = () => {
       <SearchBar setSearchTerm={setSearchTerm} />
       <div className='results-info'>
         <h3>Results: {filteredEscuelas.length}</h3>
-        <ul>
-          {currentItems.map((escuela) => (
-            <li key={escuela.id}>
-              <strong>{escuela.Nombre}</strong> - {escuela.Domicilio}
+        <ul className='results__ul'>
+          {currentItems.map((escuela, index) => (
+            <li className={`results__card ${selectedMarker === index  ? 'selected' : ''}`}
+            key={escuela.id}
+            onClick={() => handleCardClick(index)}
+            >
+              <span className='results__name'><strong>{escuela.Nombre}</strong></span>
+              <span className='results__address'>{escuela.Domicilio}</span>
             </li>
           ))}
         </ul>
       </div>
-      <div>
-        Showing {currentItems.length} of {filteredEscuelas.length} results
-      </div>
-      <Map escuelas={currentItems} />
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         handlePageChange={handlePageChange}
       />
+      <div>
+        Showing {currentItems.length} of {filteredEscuelas.length} results
+      </div>
+      <Map escuelas={currentItems}
+      selectedMarker={selectedMarker}
+      setSelectedMarker={setSelectedMarker}
+      />
+      
     </div>
   );
 };

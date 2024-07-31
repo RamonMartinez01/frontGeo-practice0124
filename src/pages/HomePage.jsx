@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getEscuelasThunk } from '../store/slices/escuelas.slice';
 import Map from '../components/mapComponents/Map';
@@ -15,10 +15,22 @@ const HomePage = () => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const escuelas = useSelector((state) => state.escuelas);
   const dispatch = useDispatch();
+  const resultsContainerRef = useRef();
 
   useEffect(() => {
     dispatch(getEscuelasThunk());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (selectedMarker !== null && resultsContainerRef.current) {
+      const selectedCard = resultsContainerRef.current.querySelector(
+        `.results__card:nth-child(${selectedMarker + 1})`
+      );
+      if (selectedCard) {
+        selectedCard.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
+      }
+    }
+  }, [selectedMarker])
 
   const filteredEscuelas = Array.isArray(escuelas) ? escuelas?.filter((escuela) => {
     const nombre = escuela?.Nombre?.toLowerCase() || '';
@@ -53,7 +65,7 @@ const HomePage = () => {
       <SearchBar setSearchTerm={setSearchTerm} />
       <div className='results-info'>
         <h3>Results: {filteredEscuelas.length}</h3>
-        <ul className='results__ul'>
+        <ul className='results__ul' ref={resultsContainerRef}>
           {currentItems.map((escuela, index) => (
             <li className={`results__card ${selectedMarker === index  ? 'selected' : ''}`}
             key={escuela.id}

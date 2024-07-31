@@ -1,6 +1,6 @@
 import './styles/Pagination.css'
 
-const Pagination = ({ currentPage, totalPages, handlePageChange }) => {
+const Pagination = ({ currentPage, totalPages, handlePageChange, setSelectedMarker }) => {
   const getPageNumbers = () => {
       const pageNumbers = [];
       const startPage = Math.max(1, currentPage - 2);
@@ -15,21 +15,26 @@ const Pagination = ({ currentPage, totalPages, handlePageChange }) => {
 
   const pageNumbers = getPageNumbers();
 
+  const handlePageChangeAndResetMarker = (pageNumber) => {
+    handlePageChange(pageNumber);
+    setSelectedMarker(null);
+};
+
   return (
       <div className="pagination">
           {currentPage > 1 && (
-              <button onClick={() => handlePageChange(currentPage - 1)}>
+              <button onClick={() => handlePageChangeAndResetMarker(currentPage - 1)}>
                   Previous
               </button>
           )}
           {pageNumbers[0] > 1 && (
-              <button onClick={() => handlePageChange(1)}>1</button>
+              <button onClick={() => handlePageChangeAndResetMarker(1)}>1</button>
           )}
           {pageNumbers[0] > 2 && <span>...</span>}
           {pageNumbers.map((number) => (
               <button
                   key={number}
-                  onClick={() => handlePageChange(number)}
+                  onClick={() => handlePageChangeAndResetMarker(number)}
                   className={currentPage === number ? 'active' : ''}
               >
                   {number}
@@ -37,12 +42,12 @@ const Pagination = ({ currentPage, totalPages, handlePageChange }) => {
           ))}
           {pageNumbers[pageNumbers.length - 1] < totalPages - 1 && <span>...</span>}
           {pageNumbers[pageNumbers.length - 1] < totalPages && (
-              <button onClick={() => handlePageChange(totalPages)}>
+              <button onClick={() => handlePageChangeAndResetMarker(totalPages)}>
                   {totalPages}
               </button>
           )}
           {currentPage < totalPages && (
-              <button onClick={() => handlePageChange(currentPage + 1)}>
+              <button onClick={() => handlePageChangeAndResetMarker(currentPage + 1)}>
                   Next
               </button>
           )}

@@ -22,7 +22,12 @@ const Map = ({ escuelas, selectedMarker, setSelectedMarker }) => {
 
 
   return (
-    <MapContainer center={[19.3097083754, -99.1042744648]} zoom={11} style={{ height: '700px', width: '100%' }}>
+    <MapContainer 
+      center={[19.3097083754, -99.1042744648]} 
+      zoom={11} 
+      style={{ height: '700px', width: '100%' }}
+      scrollWheelZoom={false}  
+    >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

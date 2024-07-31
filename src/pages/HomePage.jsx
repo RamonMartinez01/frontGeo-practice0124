@@ -64,7 +64,7 @@ const HomePage = () => {
       <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
       <SearchBar setSearchTerm={setSearchTerm} />
       <div className='results-info'>
-        <h3>Results: {filteredEscuelas.length}</h3>
+        <h3>{filteredEscuelas.length} resultados</h3>
         <ul className='results__ul' ref={resultsContainerRef}>
           {currentItems.map((escuela, index) => (
             <li className={`results__card ${selectedMarker === index  ? 'selected' : ''}`}
@@ -84,7 +84,7 @@ const HomePage = () => {
         setSelectedMarker={setSelectedMarker}
       />
       <div>
-        Showing {currentItems.length} of {filteredEscuelas.length} results
+        Mostrando {currentItems.length} de {filteredEscuelas.length} resultados
       </div>
       <Map escuelas={currentItems}
       selectedMarker={selectedMarker}

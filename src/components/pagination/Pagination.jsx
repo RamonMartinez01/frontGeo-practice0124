@@ -24,7 +24,7 @@ const Pagination = ({ currentPage, totalPages, handlePageChange, setSelectedMark
       <div className="pagination">
           {currentPage > 1 && (
               <button onClick={() => handlePageChangeAndResetMarker(currentPage - 1)}>
-                  Previous
+                  anterior
               </button>
           )}
           {pageNumbers[0] > 1 && (
@@ -48,7 +48,7 @@ const Pagination = ({ currentPage, totalPages, handlePageChange, setSelectedMark
           )}
           {currentPage < totalPages && (
               <button onClick={() => handlePageChangeAndResetMarker(currentPage + 1)}>
-                  Next
+                  siguiente
               </button>
           )}
       </div>

@@ -12,29 +12,39 @@
     margin-bottom: 10px;
   }
 
-  .results__container {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-  }
-  
-  .results__ul {
+  .results__map-ul {
     display: flex;
     flex-direction: row;
+    position: relative;
+    height: 700px;
+  }  
+  .results__ul {
+    display: flex;
+    flex-direction: column;
     flex-wrap: nowrap;
     align-items: center;
     list-style-type: none;
-    height: 16.5em;
-    padding-left: 2em;
-    padding-right: 2em;
-    overflow-x: auto;
-    overflow-y: visible;
+    width: 23%;
+    height: 700px;
+    padding-left: 1em;
+    padding-right: 1em;
+    overflow-y: auto;
+    overflow-x: hidden;
     gap: 0.5em;
-    position: relative;
+    position: absolute;
+    z-index: 100;
     background-color: rgb(182, 215, 240);
     scroll-behavior: smooth;
+    right: 0;
+    
+    bottom: -137px;
   }
-  /*.results__ul::-webkit-scrollbar {
+  .results__map {
+    width: 77%;
+    z-index: -1;
+  }
+
+   /*.results__ul::-webkit-scrollbar {
     display: none;
   }*/
   .results-info ul strong {

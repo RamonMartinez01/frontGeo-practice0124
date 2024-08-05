@@ -67,22 +67,32 @@ const HomePage = () => {
       });
     }
   }, [selectedMarker, currentItems]);
-
+  
   return (
     <div>
       <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
       <SearchBar setSearchTerm={setSearchTerm} />
       <div className='results-info'>
-        <h3>{filteredEscuelas.length} resultados</h3>
+        <div className='results__total-category'>
+          <span>
+            <h3>{filteredEscuelas.length} resultados</h3>
+          </span>
+          <span>
+            en {selectedCategory}
+          </span>
+        </div>
+        <div>
+         <span>
+          Mostrando {currentItems.length} resultados en esta página
+         </span>
+        </div>
         <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         handlePageChange={handlePageChange}
         setSelectedMarker={setSelectedMarker}
         />
-        <div>
-          Mostrando {currentItems.length} de {filteredEscuelas.length} resultados
-        </div>
+        
         <div className='resuts__map-ul'>
           
           <div className='results__map'>  

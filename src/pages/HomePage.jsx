@@ -16,6 +16,7 @@ const HomePage = () => {
   const escuelas = useSelector((state) => state.escuelas);
   const dispatch = useDispatch();
   const resultsContainerRef = useRef();
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useEffect(() => {
     dispatch(getEscuelasThunk());
@@ -50,8 +51,8 @@ const HomePage = () => {
     ));
   };
 
-   // Scroll to selected card when currentItems or selectedMarker changes
-   useEffect(() => {
+  // Scroll to selected card when currentItems or selectedMarker changes
+  useEffect(() => {
     if (selectedMarker !== null && resultsContainerRef.current) {
       // Ensure the DOM has updated before scrolling
       requestAnimationFrame(() => {
@@ -67,7 +68,7 @@ const HomePage = () => {
       });
     }
   }, [selectedMarker, currentItems]);
-  
+
   return (
     <div>
       <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
@@ -75,43 +76,43 @@ const HomePage = () => {
       <div className='results-info'>
         <div className='results__total-category'>
           <span>
-            <h3>{filteredEscuelas.length} resultados</h3>
+            <h3>{filteredEscuelas.length} resultados </h3>
           </span>
           <span>
-            en {selectedCategory}
+            <h3> de "{selectedCategory || "Todas las categorías"}"</h3>
           </span>
         </div>
         <div>
-         <span>
-          Mostrando {currentItems.length} resultados en esta página
-         </span>
+          <span>
+            Mostrando {currentItems.length} resultados en esta página
+          </span>
         </div>
         <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        handlePageChange={handlePageChange}
-        setSelectedMarker={setSelectedMarker}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePageChange={handlePageChange}
+          setSelectedMarker={setSelectedMarker}
         />
-        
         <div className='resuts__map-ul'>
-          
-          <div className='results__map'>  
+          <div className='results__ul-div'>
+            <ul className='results__ul' ref={resultsContainerRef}>
+              {currentItems.map((escuela, index) => (
+                <li className={`results__card ${selectedMarker === index ? 'selected' : ''}`}
+                  key={escuela.id}
+                  onClick={() => handleCardClick(index)}
+                >
+                  <span className='results__name'><strong>{escuela.Nombre}</strong></span>
+                  <span className='results__address'>{escuela.Domicilio}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className='results__map'>
             <Map escuelas={currentItems}
-            selectedMarker={selectedMarker}
-            setSelectedMarker={setSelectedMarker}
+              selectedMarker={selectedMarker}
+              setSelectedMarker={setSelectedMarker}
             />
           </div>
-          <ul className='results__ul' ref={resultsContainerRef} >
-            {currentItems.map((escuela, index) => (
-              <li className={`results__card ${selectedMarker === index  ? 'selected' : ''}`}
-              key={escuela.id}
-              onClick={() => handleCardClick(index)}
-              >
-                <span className='results__name'><strong>{escuela.Nombre}</strong></span>
-                <span className='results__address'>{escuela.Domicilio}</span>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </div>

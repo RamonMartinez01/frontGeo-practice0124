@@ -25,10 +25,39 @@
   }  
   .results__ul-div {
     width: 100%;
-    height: 12em;
-    margin-bottom: 0.1em;
+    height: 10em;
+    margin-bottom: 0.8em;
   }
- 
+  .results__navigation {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: rgb(182, 215, 240);
+  }
+  .prev-button, .next-button {
+    background-color: #2e2c4a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 0.4em 0.8em;
+    transition: background-color 0.3s;
+  }
+  
+  .prev-button:hover, .next-button:hover {
+    background-color: #005f78;
+  }
+  
+  .prev-button, .next-button {
+    width: 3em;
+    height: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 28px;
+    margin: 0 10px;
+  }
+  
   .results__ul {
     display: flex;
     flex-direction: row;
@@ -40,7 +69,7 @@
     padding-left: 1em;
     padding-right: 1em;
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: auto;
     gap: 0.5em;
     z-index: 100;
     background-color: rgb(182, 215, 240);
@@ -54,9 +83,9 @@
     z-index: -1;
   }
 
-   /*.results__ul::-webkit-scrollbar {
+  .results__ul::-webkit-scrollbar {
     display: none;
-  }*/
+  }
   .results-info ul strong {
     color: #333;
   }
@@ -65,14 +94,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-width: 15em;
-    max-width: 16em;
-    height: 10.5em;
+    min-width: 14em;
+    max-width: 15em;
+    height: 8.5em;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 15px;
+    margin: 0;
     box-sizing: border-box;
     transition: transform 0.3s, max-height 1.5s ease;
     cursor: pointer;
@@ -88,12 +118,12 @@
     max-height: 200px;
   }
   .results__name {
-    font-size: small;
+    font-size: 0.8rem;
   }
   .results__address {
     opacity: 0;
     max-height: 0;
-    font-size: small;
+    font-size: 0.78rem;
     overflow: hidden;
     transition: opacity 0.5s ease, max-height 0.5s ease;
   }
@@ -101,7 +131,7 @@
   .results__card strong {
     display: block;
     margin-bottom: 5px;
-    font-size: 1.2em;
+    font-size: 0.9rem;
     color: #333;
   }
   

@@ -51,6 +51,12 @@ const HomePage = () => {
     ));
   };
 
+  const scrollResults = (direction) => {
+    const scrollContainer = resultsContainerRef.current;
+    const scrollAmount = 200; // Adjust this value as needed
+    scrollContainer.scrollLeft += direction * scrollAmount;
+  };
+
   // Scroll to selected card when currentItems or selectedMarker changes
   useEffect(() => {
     if (selectedMarker !== null && resultsContainerRef.current) {
@@ -95,17 +101,23 @@ const HomePage = () => {
         />
         <div className='resuts__map-ul'>
           <div className='results__ul-div'>
-            <ul className='results__ul' ref={resultsContainerRef}>
-              {currentItems.map((escuela, index) => (
-                <li className={`results__card ${selectedMarker === index ? 'selected' : ''}`}
-                  key={escuela.id}
-                  onClick={() => handleCardClick(index)}
-                >
-                  <span className='results__name'><strong>{escuela.Nombre}</strong></span>
-                  <span className='results__address'>{escuela.Domicilio}</span>
-                </li>
-              ))}
-            </ul>
+            <div className="results__navigation">
+              <button className="prev-button" onClick={() => scrollResults(-1)}>{"<<"}</button>
+  
+                <ul className='results__ul' ref={resultsContainerRef}>
+                  {currentItems.map((escuela, index) => (
+                    <li className={`results__card ${selectedMarker === index ? 'selected' : ''}`}
+                      key={escuela.id}
+                      onClick={() => handleCardClick(index)}
+                    >
+                      <span className='results__name'><strong>{escuela.Nombre}</strong></span>
+                      <span className='results__address'>{escuela.Domicilio}</span>
+                    </li>
+                  ))}
+                </ul>
+
+              <button className="next-button" onClick={() => scrollResults(1)}>{">>"}</button>
+            </div>  
           </div>
           <div className='results__map'>
             <Map escuelas={currentItems}

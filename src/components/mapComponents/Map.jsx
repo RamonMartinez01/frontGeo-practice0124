@@ -46,7 +46,7 @@ const Map = ({ escuelas, selectedMarker, setSelectedMarker }) => {
       {escuelas.map((escuela, index) => (
         <Marker 
           key={escuela.id}
-          position={[escuela.Latitud, escuela.Longitud]}
+          position={[escuela.latitud, escuela.longitud]}
           icon={
             index === selectedMarker ? selectedIcon 
             : (index === hoveredMarker ? highlightedIcon : defaultIcon)

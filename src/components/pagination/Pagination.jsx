@@ -1,56 +1,30 @@
+import { useDispatch } from "react-redux";
+import { getEscuelasThunk } from "../../store/slices/escuelas.slice";
 import './styles/Pagination.css'
 
-const Pagination = ({ currentPage, totalPages, handlePageChange, setSelectedMarker }) => {
-  const getPageNumbers = () => {
-      const pageNumbers = [];
-      const startPage = Math.max(1, currentPage - 2);
-      const endPage = Math.min(totalPages, currentPage + 2);
+const Pagination = ({ currentPage, totalPages, handlePageChange, setSelectedMarker, searchTerm  }) => {
+    const dispatch = useDispatch();
 
-      for (let i = startPage; i <= endPage; i++) {
-          pageNumbers.push(i);
-      }
-
-      return pageNumbers;
-  };
-
-  const pageNumbers = getPageNumbers();
-
-  const handlePageChangeAndResetMarker = (pageNumber) => {
-    handlePageChange(pageNumber);
-    setSelectedMarker(null);
-};
+    const changePage = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+          handlePageChange(newPage);
+          
+          // Fetch the new page of results
+          dispatch(getEscuelasThunk(selectedCategory, searchTerm, newPage));
+        }
+      };
 
   return (
       <div className="pagination">
-          {currentPage > 1 && (
-              <button onClick={() => handlePageChangeAndResetMarker(currentPage - 1)}>
-                  anterior
-              </button>
-          )}
-          {pageNumbers[0] > 1 && (
-              <button onClick={() => handlePageChangeAndResetMarker(1)}>1</button>
-          )}
-          {pageNumbers[0] > 2 && <span>...</span>}
-          {pageNumbers.map((number) => (
-              <button
-                  key={number}
-                  onClick={() => handlePageChangeAndResetMarker(number)}
-                  className={currentPage === number ? 'active' : ''}
-              >
-                  {number}
-              </button>
-          ))}
-          {pageNumbers[pageNumbers.length - 1] < totalPages - 1 && <span>...</span>}
-          {pageNumbers[pageNumbers.length - 1] < totalPages && (
-              <button onClick={() => handlePageChangeAndResetMarker(totalPages)}>
-                  {totalPages}
-              </button>
-          )}
-          {currentPage < totalPages && (
-              <button onClick={() => handlePageChangeAndResetMarker(currentPage + 1)}>
-                  siguiente
-              </button>
-          )}
+          <button disabled={currentPage === 1} onClick={() => changePage(currentPage - 1)}>
+        {"<"} Anterior
+      </button>
+
+      <span>Página {currentPage} de {totalPages}</span>
+
+      <button disabled={currentPage === totalPages} onClick={() => changePage(currentPage + 1)}>
+        Siguiente {">"}
+      </button>
       </div>
   );
 };

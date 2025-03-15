@@ -13,33 +13,35 @@ const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 50;
   const [selectedMarker, setSelectedMarker] = useState(null);
-  const escuelas = useSelector((state) => state.escuelas);
+  //const escuelas = useSelector((state) => state.escuelas);
   const dispatch = useDispatch();
   const resultsContainerRef = useRef();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  
+  // Access escuelas state from Redux
+  const { data, loading, error } = useSelector((state) => state.escuelas);
+  const escuelasData = data?.data || []; // Extract schools from API response
 
   useEffect(() => {
-    dispatch(getEscuelasThunk());
-  }, [dispatch]);
+    dispatch(getEscuelasThunk(selectedCategory, searchTerm));
+  }, [dispatch, selectedCategory, searchTerm]);
 
 
-
-  const filteredEscuelas = Array.isArray(escuelas) ? escuelas?.filter((escuela) => {
-    const nombre = escuela?.Nombre?.toLowerCase() || '';
-    const domicilio = escuela?.Domicilio?.toLowerCase() || '';
-    const searchTermLower = searchTerm.toLowerCase();
+  const validEscuelas = Array.isArray(escuelasData)
+  ? escuelasData.filter((escuela) => {
+    console.log("Checking escuela:", escuela); // Debugging
     return (
-      (selectedCategory === '' || escuela.categoria === selectedCategory) &&
-      (nombre.includes(searchTermLower) || domicilio.includes(searchTermLower))
+      escuela.latitud !== undefined &&
+      escuela.longitud !== undefined &&
+      typeof escuela.latitud === "number" &&
+      typeof escuela.longitud === "number"
     );
-  }) : [];
-
-  const validEscuelas = filteredEscuelas.filter((escuela) => escuela.Latitud && escuela.Longitud);
-
+  })
+  : [];
+ 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = validEscuelas.slice(indexOfFirstItem, indexOfLastItem);
-
   const totalPages = Math.ceil(validEscuelas.length / itemsPerPage);
 
   const handlePageChange = (pageNumber) => {
@@ -62,7 +64,7 @@ const HomePage = () => {
     if (selectedMarker !== null && resultsContainerRef.current) {
       // Ensure the DOM has updated before scrolling
       requestAnimationFrame(() => {
-        const itemIndex = currentItems.findIndex((escuela, idx) => idx === selectedMarker);
+        const itemIndex = currentItems.findIndex((_, idx) => idx === selectedMarker);
         if (itemIndex !== -1) {
           const selectedCard = resultsContainerRef.current.querySelector(
             `.results__card:nth-child(${itemIndex + 1})`
@@ -74,15 +76,21 @@ const HomePage = () => {
       });
     }
   }, [selectedMarker, currentItems]);
-
+  console.log(validEscuelas)
+  //console.log(escuelas)
   return (
     <div>
       <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
       <SearchBar setSearchTerm={setSearchTerm} />
+
+       {/* Show loading and error messages */}
+       {loading && <p>Cargando datos...</p>}
+      {error && <p className="error-message">Error: {error}</p>}
+
       <div className='results-info'>
         <div className='results__total-category'>
           <span>
-            <h3>{filteredEscuelas.length} resultados </h3>
+            <h3>{validEscuelas.length} resultados </h3>
           </span>
           <span>
             <h3> de "{selectedCategory || "Todas las categorías"}"</h3>
@@ -93,6 +101,7 @@ const HomePage = () => {
             Mostrando {currentItems.length} resultados en esta página
           </span>
         </div>
+
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}

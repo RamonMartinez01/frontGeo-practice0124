@@ -4,26 +4,37 @@ import axios from "axios";
 
 const escuelasSlice = createSlice({
     name: 'escuelas',
-    initialState: null,
+    initialState: { data: null, loading: false, error: null },
     reducers: {
-        setEscuelas: (currentValue, action) => action.payload
+        setEscuelas: (state, action) => {
+            state.data = action.payload;
+            state.loading = false;
+            state.error = null
+        },
+        setLoading: (state) => {
+            state.loading = true;
+            state.error = null;
+        },
+        setError: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        }
     }
 })
 
-export const { setEscuelas } = escuelasSlice.actions
+export const { setEscuelas, setLoading, setError } = escuelasSlice.actions;
+export default escuelasSlice.reducer;
 
-export default escuelasSlice.reducer
+export const getEscuelasThunk = (category = "", searchTerm = "") => async (dispatch) => {
+    dispatch(setLoading());
 
-export const getEscuelasThunk = () => (dispatch) => {
-    const url = `${API_BASE_URL}`
-    return axios.get(url)
-        .then(res => {
-            const escuelas = res.data;
-            dispatch(setEscuelas(res.data))
-            return escuelas;
-        })
-        .catch(err => {
-             console.error('Error fething fixtures:', err );
-            throw err;
-        })
+    try {
+        const url = `${API_BASE_URL}?categoria=${category}&search=${searchTerm}`;
+        const response = await axios.get(url);
+        dispatch(setEscuelas(response.data));
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching escuelas:", error);
+        dispatch(setError(error.message || "Error fetching data"));
+    }
 }

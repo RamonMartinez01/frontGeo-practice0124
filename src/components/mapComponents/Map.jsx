@@ -59,9 +59,9 @@ const Map = ({ escuelas, selectedMarker, setSelectedMarker }) => {
           ref={el => markerRef.current[index] = el}
         >
           <Popup>
-            <strong>{escuela.Nombre}</strong>
+            <strong>{escuela.nombre}</strong>
             <br />
-            {escuela.Domicilio}
+            {escuela.domicilio}
           </Popup>
         </Marker>
       ))}

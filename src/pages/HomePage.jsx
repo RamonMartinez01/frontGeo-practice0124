@@ -77,7 +77,7 @@ const HomePage = () => {
     }
   }, [selectedMarker, currentItems]);
   console.log(validEscuelas)
-  //console.log(escuelas)
+  console.log(currentItems[0])
   return (
     <div>
       <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
@@ -119,8 +119,8 @@ const HomePage = () => {
                       key={escuela.id}
                       onClick={() => handleCardClick(index)}
                     >
-                      <span className='results__name'><strong>{escuela.Nombre}</strong></span>
-                      <span className='results__address'>{escuela.Domicilio}</span>
+                      <span className='results__name'><strong>{escuela.nombre}</strong></span>
+                      <span className='results__address'>{escuela.domicilio}</span>
                     </li>
                   ))}
                 </ul>

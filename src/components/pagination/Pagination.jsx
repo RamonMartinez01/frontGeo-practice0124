@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { getEscuelasThunk } from "../../store/slices/escuelas.slice";
 import './styles/Pagination.css'
 
-const Pagination = ({ currentPage, totalPages, handlePageChange, setSelectedMarker, searchTerm  }) => {
+const Pagination = ({ selectedCategory, currentPage, totalPages, handlePageChange, searchTerm  }) => {
     const dispatch = useDispatch();
 
     const changePage = (newPage) => {

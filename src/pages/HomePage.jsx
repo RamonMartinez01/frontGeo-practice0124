@@ -21,6 +21,7 @@ const HomePage = () => {
   // Access escuelas state from Redux
   const { data, loading, error } = useSelector((state) => state.escuelas);
   const escuelasData = data?.data || []; // Extract schools from API response
+  const totalPages = data?.total_pages || 1;  // Get total pages from API
 
   useEffect(() => {
     dispatch(getEscuelasThunk(selectedCategory, searchTerm));
@@ -42,10 +43,11 @@ const HomePage = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = validEscuelas.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(validEscuelas.length / itemsPerPage);
+ // const totalPages = Math.ceil(validEscuelas.length / itemsPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+    dispatch(getEscuelasThunk(selectedCategory, searchTerm, pageNumber)); // Fetch the new page
   };
   const handleCardClick = (index) => {
     setSelectedMarker((selectedMarker) => (
@@ -76,8 +78,8 @@ const HomePage = () => {
       });
     }
   }, [selectedMarker, currentItems]);
-  console.log(validEscuelas)
-  console.log(currentItems[0])
+  //console.log(data)
+  console.log(currentItems)
   return (
     <div>
       <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
@@ -104,9 +106,11 @@ const HomePage = () => {
 
         <Pagination
           currentPage={currentPage}
-          totalPages={totalPages}
+          totalPages={totalPages}  // Now uses total pages from API
           handlePageChange={handlePageChange}
           setSelectedMarker={setSelectedMarker}
+          selectedCategory={selectedCategory}  // Pass selected category
+          searchTerm={searchTerm}  // Pass search term
         />
         <div className='resuts__map-ul'>
           <div className='results__ul-div'>

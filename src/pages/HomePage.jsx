@@ -11,12 +11,9 @@ const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  //const itemsPerPage = 50;
   const [selectedMarker, setSelectedMarker] = useState(null);
-  //const escuelas = useSelector((state) => state.escuelas);
   const dispatch = useDispatch();
   const resultsContainerRef = useRef();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   
   // Access escuelas state from Redux
   const { data, loading, error } = useSelector((state) => state.escuelas);
@@ -76,8 +73,8 @@ const HomePage = () => {
       });
     }
   }, [selectedMarker, currentItems]);
-  console.log(validEscuelas)
-  console.log(currentPage)
+  //nsole.log(validEscuelas)
+  //console.log(currentPage)
   
 
   return (

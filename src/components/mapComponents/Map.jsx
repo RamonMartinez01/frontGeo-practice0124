@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import { defaultIcon, highlightedIcon, selectedIcon } from '../../utils/markerIcons';
 
 
-const Map = ({ escuelas, selectedMarker, setSelectedMarker }) => {
+const Map = ({ currentItems, selectedMarker, setSelectedMarker }) => {
   const [hoveredMarker, setHoveredMarker] = useState(null);
   const markerRef = useRef([]);
 
@@ -43,10 +43,10 @@ const Map = ({ escuelas, selectedMarker, setSelectedMarker }) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      {escuelas.map((escuela, index) => (
+      {currentItems.map((escuela, index) => (
         <Marker 
           key={escuela.id}
-          position={[escuela.Latitud, escuela.Longitud]}
+          position={[escuela.latitud, escuela.longitud]}
           icon={
             index === selectedMarker ? selectedIcon 
             : (index === hoveredMarker ? highlightedIcon : defaultIcon)
@@ -59,9 +59,9 @@ const Map = ({ escuelas, selectedMarker, setSelectedMarker }) => {
           ref={el => markerRef.current[index] = el}
         >
           <Popup>
-            <strong>{escuela.Nombre}</strong>
+            <strong>{escuela.nombre}</strong>
             <br />
-            {escuela.Domicilio}
+            {escuela.domicilio}
           </Popup>
         </Marker>
       ))}

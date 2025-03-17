@@ -25,11 +25,11 @@ const escuelasSlice = createSlice({
 export const { setEscuelas, setLoading, setError } = escuelasSlice.actions;
 export default escuelasSlice.reducer;
 
-export const getEscuelasThunk = (category = "", searchTerm = "") => async (dispatch) => {
+export const getEscuelasThunk = (category = "", searchTerm = "", page = 1) => async (dispatch) => {
     dispatch(setLoading());
 
     try {
-        const url = `${API_BASE_URL}?categoria=${category}&search=${searchTerm}`;
+        const url = `${API_BASE_URL}?categoria=${category}&search=${searchTerm}&page=${page}`;
         const response = await axios.get(url);
         dispatch(setEscuelas(response.data));
         return response.data;

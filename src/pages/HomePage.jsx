@@ -79,7 +79,7 @@ const HomePage = () => {
     }
   }, [selectedMarker, currentItems]);
   //console.log(data)
-  console.log(currentItems)
+  console.log(currentPage)
   return (
     <div>
       <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
@@ -133,7 +133,7 @@ const HomePage = () => {
             </div>  
           </div>
           <div className='results__map'>
-            <Map escuelas={currentItems}
+            <Map currentItems={currentItems}
               selectedMarker={selectedMarker}
               setSelectedMarker={setSelectedMarker}
             />

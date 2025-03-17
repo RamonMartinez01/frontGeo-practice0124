@@ -11,7 +11,7 @@ const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 50;
+  //const itemsPerPage = 50;
   const [selectedMarker, setSelectedMarker] = useState(null);
   //const escuelas = useSelector((state) => state.escuelas);
   const dispatch = useDispatch();
@@ -40,10 +40,8 @@ const HomePage = () => {
   })
   : [];
  
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = validEscuelas.slice(indexOfFirstItem, indexOfLastItem);
- // const totalPages = Math.ceil(validEscuelas.length / itemsPerPage);
+  const currentItems = validEscuelas;
+ 
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -78,8 +76,10 @@ const HomePage = () => {
       });
     }
   }, [selectedMarker, currentItems]);
-  //console.log(data)
+  console.log(validEscuelas)
   console.log(currentPage)
+  
+
   return (
     <div>
       <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />

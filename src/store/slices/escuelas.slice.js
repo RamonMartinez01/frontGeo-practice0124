@@ -29,7 +29,15 @@ export const getEscuelasThunk = (category = "", searchTerm = "", page = 1) => as
     dispatch(setLoading());
 
     try {
-        const url = `${API_BASE_URL}?categoria=${category}&search=${searchTerm}&page=${page}`;
+        let url = `${API_BASE_URL}?&page=${page}`;
+
+        if (category) {
+            url += `&categoria=${encodeURIComponent(category)}`;
+        }
+        if (searchTerm) {
+            url += `&search=${encodeURIComponent(searchTerm)}`;
+        }
+
         const response = await axios.get(url);
         dispatch(setEscuelas(response.data));
         return response.data;
@@ -37,4 +45,4 @@ export const getEscuelasThunk = (category = "", searchTerm = "", page = 1) => as
         console.error("Error fetching escuelas:", error);
         dispatch(setError(error.message || "Error fetching data"));
     }
-}
+};

@@ -22,8 +22,6 @@ const HomePage = () => {
 
   useEffect(() => {
     dispatch(getEscuelasThunk(selectedCategory, searchTerm, currentPage));
-    //setCurrentPage(1); 
-
   }, [dispatch, selectedCategory, searchTerm, currentPage]);
 
   const validEscuelas = Array.isArray(escuelasData)
@@ -35,11 +33,10 @@ const HomePage = () => {
   )
   : [];
 
+  // Reset to first page (1) when search or category changes
   useEffect(() => {
     setCurrentPage(1); 
-
   }, [ selectedCategory, searchTerm ]);
- 
   const currentItems = validEscuelas;
  
   const handlePageChange = (pageNumber) => {
@@ -108,7 +105,7 @@ const HomePage = () => {
 
         <Pagination
           currentPage={currentPage}
-          totalPages={totalPages}  // Now uses total pages from API
+          totalPages={totalPages}  // Total pages from API
           handlePageChange={handlePageChange}
         />
         <div className='resuts__map-ul'>

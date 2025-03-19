@@ -21,9 +21,8 @@ const HomePage = () => {
   const totalPages = data?.total_pages || 1;  // Get total pages from API
 
   useEffect(() => {
-    dispatch(getEscuelasThunk(selectedCategory, searchTerm));
-  }, [dispatch, selectedCategory, searchTerm]);
-
+    dispatch(getEscuelasThunk(selectedCategory, searchTerm, currentPage));
+  }, [dispatch, selectedCategory, searchTerm, currentPage]);
 
   const validEscuelas = Array.isArray(escuelasData)
   ? escuelasData.filter((escuela) => 
@@ -36,11 +35,10 @@ const HomePage = () => {
  
   const currentItems = validEscuelas;
  
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
-    dispatch(getEscuelasThunk(selectedCategory, searchTerm, pageNumber)); // Fetch the new page
   };
+  
   const handleCardClick = (index) => {
     setSelectedMarker((selectedMarker) => (
       selectedMarker === index ? null : index
@@ -69,15 +67,18 @@ const HomePage = () => {
         }
       });
     }
-  }, [selectedMarker, currentItems]);
-  //nsole.log(validEscuelas)
-  //console.log(currentPage)
-  
+  }, [selectedMarker, currentItems]);  
 
   return (
     <div>
-      <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-      <SearchBar setSearchTerm={setSearchTerm} />
+      <CategoryFilter 
+        selectedCategory={selectedCategory} 
+        setSelectedCategory={setSelectedCategory}
+      />
+      
+      <SearchBar 
+        setSearchTerm={setSearchTerm} 
+      />
 
        {/* Show loading and error messages */}
        {loading && <p>Cargando datos...</p>}
@@ -102,9 +103,6 @@ const HomePage = () => {
           currentPage={currentPage}
           totalPages={totalPages}  // Now uses total pages from API
           handlePageChange={handlePageChange}
-          setSelectedMarker={setSelectedMarker}
-          selectedCategory={selectedCategory}  // Pass selected category
-          searchTerm={searchTerm}  // Pass search term
         />
         <div className='resuts__map-ul'>
           <div className='results__ul-div'>

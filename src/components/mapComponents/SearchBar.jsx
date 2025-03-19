@@ -1,19 +1,7 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux"
-import { getEscuelasThunk } from "../../store/slices/escuelas.slice";
 
-const SearchBar = ({ searchTerm, setSearchTerm, selectedCategory, currentpage }) => {
-  const dispatch = useDispatch();
-  
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      dispatch(getEscuelasThunk(selectedCategory, searchTerm, currentpage));
-    }, 500);// Wait 500ms after typing
-
-    return () => clearTimeout(delayDebounceFn); // Clear timeout on each keystroke
-  }, [ searchTerm, dispatch, selectedCategory, currentpage])
-
-    return (
+const SearchBar = ({ searchTerm, setSearchTerm }) => {
+    
+     return (
       <div className="search-bar">
         <input
           type="text"

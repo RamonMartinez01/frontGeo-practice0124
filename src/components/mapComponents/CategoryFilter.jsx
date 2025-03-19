@@ -1,12 +1,12 @@
 
-const CategoryFilter = ({ selectedCategory, setSelectedCategory }) => {
+const CategoryFilter = ({ selectedCategory, setSelectedCategory, setCurrentPage }) => {
 
   const categories = ["PREESCOLAR", "PRIMARIA", "SECUNDARIA"];
 
   const handleCategoryChange = (e) => {
     const newCategory = e.target.value;
     setSelectedCategory(newCategory);
-;
+    setCurrentPage(1);  // Reset to first page when category changes
 };
     
   return (

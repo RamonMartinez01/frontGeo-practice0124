@@ -78,6 +78,7 @@ const HomePage = () => {
       <CategoryFilter 
         selectedCategory={selectedCategory} 
         setSelectedCategory={setSelectedCategory}
+        setCurrentPage={setCurrentPage}
       />
       
       <SearchBar 

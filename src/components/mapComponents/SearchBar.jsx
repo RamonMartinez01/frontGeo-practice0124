@@ -1,3 +1,4 @@
+import "./Styles/Searchbar_styles.css"
 
 const SearchBar = ({ searchTerm, setSearchTerm }) => {
     

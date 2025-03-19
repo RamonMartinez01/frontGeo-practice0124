@@ -74,7 +74,7 @@ const HomePage = () => {
   }, [selectedMarker, currentItems]);  
 
   return (
-    <div>
+    <div className='homepage__main'>
       <CategoryFilter 
         selectedCategory={selectedCategory} 
         setSelectedCategory={setSelectedCategory}

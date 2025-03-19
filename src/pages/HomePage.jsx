@@ -22,7 +22,12 @@ const HomePage = () => {
 
   useEffect(() => {
     dispatch(getEscuelasThunk(selectedCategory, searchTerm, currentPage));
-  }, [dispatch, selectedCategory, searchTerm, currentPage]);
+  }, [dispatch, selectedCategory, currentPage]);
+
+  const handleSearch = () => {
+    dispatch(getEscuelasThunk(selectedCategory, searchTerm, 1)); // Fetch results only when user submits
+    setCurrentPage(1); // Reset pagination
+};
 
   const validEscuelas = Array.isArray(escuelasData)
   ? escuelasData.filter((escuela) => 
@@ -83,6 +88,8 @@ const HomePage = () => {
       
       <SearchBar 
         setSearchTerm={setSearchTerm} 
+        setCurrentPage={setCurrentPage}
+        handleSearch={handleSearch}
       />
 
        {/* Show loading and error messages */}

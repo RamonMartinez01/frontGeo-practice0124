@@ -1,16 +1,12 @@
-import { useDispatch } from "react-redux";
-import { getEscuelasThunk } from "../../store/slices/escuelas.slice";
 
-const CategoryFilter = ({ selectedCategory, setSelectedCategory, searchTerm }) => {
-  const dispatch = useDispatch();
+const CategoryFilter = ({ selectedCategory, setSelectedCategory }) => {
+
   const categories = ["PREESCOLAR", "PRIMARIA", "SECUNDARIA"];
 
   const handleCategoryChange = (e) => {
     const newCategory = e.target.value;
     setSelectedCategory(newCategory);
-
-    // Fetch filtered data immediately when the category changes
-    dispatch(getEscuelasThunk(newCategory, searchTerm));
+;
 };
     
   return (

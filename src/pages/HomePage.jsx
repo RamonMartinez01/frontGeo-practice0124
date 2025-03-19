@@ -22,6 +22,8 @@ const HomePage = () => {
 
   useEffect(() => {
     dispatch(getEscuelasThunk(selectedCategory, searchTerm, currentPage));
+    //setCurrentPage(1); 
+
   }, [dispatch, selectedCategory, searchTerm, currentPage]);
 
   const validEscuelas = Array.isArray(escuelasData)
@@ -32,6 +34,11 @@ const HomePage = () => {
       typeof escuela.longitud === "number"
   )
   : [];
+
+  useEffect(() => {
+    setCurrentPage(1); 
+
+  }, [ selectedCategory, searchTerm ]);
  
   const currentItems = validEscuelas;
  

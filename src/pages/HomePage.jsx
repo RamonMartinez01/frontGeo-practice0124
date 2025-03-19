@@ -26,15 +26,12 @@ const HomePage = () => {
 
 
   const validEscuelas = Array.isArray(escuelasData)
-  ? escuelasData.filter((escuela) => {
-    console.log("Checking escuela:", escuela); // Debugging
-    return (
+  ? escuelasData.filter((escuela) => 
       escuela.latitud !== undefined &&
       escuela.longitud !== undefined &&
       typeof escuela.latitud === "number" &&
       typeof escuela.longitud === "number"
-    );
-  })
+  )
   : [];
  
   const currentItems = validEscuelas;

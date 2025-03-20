@@ -9,8 +9,9 @@
     width: 100%;
     max-width: 400px; /* Adjust width */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
   }
-  
+
   .search-bar input {
     border: none;
     outline: none;
@@ -18,8 +19,28 @@
     font-size: 16px;
   }
   
-  .search-bar box-icon {
-    width: 20px;
-    height: 20px;
-    color: #666; /* Adjust icon color */
+  .search-icon,
+  .clear-icon {
+    width: 24px;
+    height: 24px;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
   }
+
+  .search-icon:hover,
+  .clear-icon:hover {
+    color: #000; /* Darker color on hover */
+  }
+
+  
+  .clear-icon {
+    position: absolute;
+    right: 40px; /* Position "X" inside input */
+  }
+  
+  .search-icon {
+    position: absolute;
+    right: 10px; /* Position search icon */
+  }
+  

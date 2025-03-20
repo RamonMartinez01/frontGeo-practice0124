@@ -88,8 +88,8 @@ const HomePage = () => {
       
       <SearchBar 
         setSearchTerm={setSearchTerm} 
-        setCurrentPage={setCurrentPage}
         handleSearch={handleSearch}
+        searchTerm={searchTerm}
       />
 
        {/* Show loading and error messages */}

@@ -19,6 +19,7 @@ const HomePage = () => {
   const { data, loading, error } = useSelector((state) => state.escuelas);
   const escuelasData = data?.data || []; // Extract schools from API response
   const totalPages = data?.total_pages || 1;  // Get total pages from API
+  const totalEscuelas = data?.total || []; // Get total elements required form API
 
   useEffect(() => {
     dispatch(getEscuelasThunk(selectedCategory, searchTerm, currentPage));
@@ -99,7 +100,7 @@ const HomePage = () => {
       <div className='results-info'>
         <div className='results__total-category'>
           <span>
-            <h3>{validEscuelas.length} resultados </h3>
+            <h3>{totalEscuelas} resultados </h3>
           </span>
           <span>
             <h3> de "{selectedCategory || "Todas las categorías"}"</h3>

@@ -21,29 +21,33 @@ const HomePage = () => {
   const totalPages = data?.total_pages || 1;  // Get total pages from API
 
   useEffect(() => {
-    dispatch(getEscuelasThunk(selectedCategory, searchTerm));
-  }, [dispatch, selectedCategory, searchTerm]);
+    dispatch(getEscuelasThunk(selectedCategory, searchTerm, currentPage));
+  }, [dispatch, selectedCategory, currentPage]);
 
+  const handleSearch = () => {
+    dispatch(getEscuelasThunk(selectedCategory, searchTerm, 1)); // Fetch results only when user submits
+    setCurrentPage(1); // Reset pagination
+};
 
   const validEscuelas = Array.isArray(escuelasData)
-  ? escuelasData.filter((escuela) => {
-    console.log("Checking escuela:", escuela); // Debugging
-    return (
+  ? escuelasData.filter((escuela) => 
       escuela.latitud !== undefined &&
       escuela.longitud !== undefined &&
       typeof escuela.latitud === "number" &&
       typeof escuela.longitud === "number"
-    );
-  })
+  )
   : [];
- 
+
+  // Reset to first page (1) when search or category changes
+  useEffect(() => {
+    setCurrentPage(1); 
+  }, [ selectedCategory, searchTerm ]);
   const currentItems = validEscuelas;
  
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
-    dispatch(getEscuelasThunk(selectedCategory, searchTerm, pageNumber)); // Fetch the new page
   };
+  
   const handleCardClick = (index) => {
     setSelectedMarker((selectedMarker) => (
       selectedMarker === index ? null : index
@@ -72,15 +76,21 @@ const HomePage = () => {
         }
       });
     }
-  }, [selectedMarker, currentItems]);
-  //nsole.log(validEscuelas)
-  //console.log(currentPage)
-  
+  }, [selectedMarker, currentItems]);  
 
   return (
-    <div>
-      <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-      <SearchBar setSearchTerm={setSearchTerm} />
+    <div className='homepage__main'>
+      <CategoryFilter 
+        selectedCategory={selectedCategory} 
+        setSelectedCategory={setSelectedCategory}
+        setCurrentPage={setCurrentPage}
+      />
+      
+      <SearchBar 
+        setSearchTerm={setSearchTerm} 
+        handleSearch={handleSearch}
+        searchTerm={searchTerm}
+      />
 
        {/* Show loading and error messages */}
        {loading && <p>Cargando datos...</p>}
@@ -103,11 +113,8 @@ const HomePage = () => {
 
         <Pagination
           currentPage={currentPage}
-          totalPages={totalPages}  // Now uses total pages from API
+          totalPages={totalPages}  // Total pages from API
           handlePageChange={handlePageChange}
-          setSelectedMarker={setSelectedMarker}
-          selectedCategory={selectedCategory}  // Pass selected category
-          searchTerm={searchTerm}  // Pass search term
         />
         <div className='resuts__map-ul'>
           <div className='results__ul-div'>

@@ -1,28 +1,27 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux"
-import { getEscuelasThunk } from "../../store/slices/escuelas.slice";
+import "./Styles/Searchbar_styles.css";
 
-const SearchBar = ({ searchTerm, setSearchTerm, selectedCategory, currentpage }) => {
-  const dispatch = useDispatch();
-  
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      dispatch(getEscuelasThunk(selectedCategory, searchTerm, currentpage));
-    }, 500);// Wait 500ms after typing
+const SearchBar = ({ searchTerm, setSearchTerm, handleSearch }) => {
+    
+const clearSearch = () => {
+  setSearchTerm("");
+};
 
-    return () => clearTimeout(delayDebounceFn); // Clear timeout on each keystroke
-  }, [ searchTerm, dispatch, selectedCategory, currentpage])
-
-    return (
-      <div className="search-bar">
+     return (
+      <form  className="search-bar" onSubmit={(e) => { e.preventDefault(); handleSearch(); }}>
         <input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Buscar por nombre o dirección..."
         />
-      </div>
-    )
-  }
+
+        { searchTerm && ( //Only show "X" when searchTerm is not empty
+          <box-icon name='x-circle' onClick={clearSearch} className="clear-icon" ></box-icon>
+        )}
+
+        <box-icon name="search-alt-2" onClick={handleSearch} className="search-icon" ></box-icon>  
+      </form >
+    );
+  };
   
   export default SearchBar

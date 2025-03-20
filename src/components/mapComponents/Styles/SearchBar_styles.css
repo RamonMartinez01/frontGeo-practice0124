@@ -1,0 +1,46 @@
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and input */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px 12px;
+    width: 100%;
+    max-width: 400px; /* Adjust width */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+
+  .search-bar input {
+    border: none;
+    outline: none;
+    flex-grow: 1; /* Make input take remaining space */
+    font-size: 16px;
+  }
+  
+  .search-icon,
+  .clear-icon {
+    width: 24px;
+    height: 24px;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+  }
+
+  .search-icon:hover,
+  .clear-icon:hover {
+    color: #000; /* Darker color on hover */
+  }
+
+  
+  .clear-icon {
+    position: absolute;
+    right: 40px; /* Position "X" inside input */
+  }
+  
+  .search-icon {
+    position: absolute;
+    right: 10px; /* Position search icon */
+  }
+  

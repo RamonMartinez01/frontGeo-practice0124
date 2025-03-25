@@ -1,2 +1,2 @@
-const API_BASE_URL = 'http://127.0.0.1:8000/api/escuelas/'
+const API_BASE_URL = 'http://52.14.69.178/:8000/api/escuelas/'
 export default API_BASE_URL

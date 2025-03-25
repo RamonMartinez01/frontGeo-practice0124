@@ -1,4 +1,4 @@
-import "./Styles/Searchbar_styles.css";
+import "./Styles/SearchBar_styles.css";
 
 const SearchBar = ({ searchTerm, setSearchTerm, handleSearch }) => {
     

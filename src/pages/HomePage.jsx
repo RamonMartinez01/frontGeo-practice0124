@@ -8,7 +8,7 @@ import Pagination from '../components/pagination/Pagination';
 import './styles/HomePage.css'
 
 const HomePage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -26,9 +26,15 @@ const HomePage = () => {
   }, [dispatch, selectedCategory, currentPage]);
 
   const handleSearch = () => {
-    dispatch(getEscuelasThunk(selectedCategory, searchTerm, 1)); // Fetch results only when user submits
-    setCurrentPage(1); // Reset pagination
-};
+    setCurrentPage(1);  // this change triggers the useEffect above
+    dispatch(getEscuelasThunk(selectedCategory, searchTerm, 1)); // Fetch results only when user submits in SearchBar
+  };
+
+  useEffect(() => {  //  Makes a new API call when the searchTerm value is reset in the input in SearchBar.jsx
+    if (searchTerm === "") {
+      handleSearch(); // Only trigger when searchTerm is cleared
+    }
+  }, [searchTerm]);
 
   const validEscuelas = Array.isArray(escuelasData)
   ? escuelasData.filter((escuela) => 
@@ -39,10 +45,6 @@ const HomePage = () => {
   )
   : [];
 
-  // Reset to first page (1) when search or category changes
-  useEffect(() => {
-    setCurrentPage(1); 
-  }, [ selectedCategory, searchTerm ]);
   const currentItems = validEscuelas;
  
   const handlePageChange = (pageNumber) => {
@@ -61,23 +63,23 @@ const HomePage = () => {
     scrollContainer.scrollLeft += direction * scrollAmount;
   };
 
-  // Scroll to selected card when currentItems or selectedMarker changes
+  // Scroll to selected card when validEscuelas or selectedMarker changes
   useEffect(() => {
     if (selectedMarker !== null && resultsContainerRef.current) {
       // Ensure the DOM has updated before scrolling
       requestAnimationFrame(() => {
-        const itemIndex = currentItems.findIndex((_, idx) => idx === selectedMarker);
+        const itemIndex = validEscuelas.findIndex((_, idx) => idx === selectedMarker);
         if (itemIndex !== -1) {
           const selectedCard = resultsContainerRef.current.querySelector(
             `.results__card:nth-child(${itemIndex + 1})`
           );
           if (selectedCard) {
-            selectedCard.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+            selectedCard.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'center' });
           }
         }
       });
     }
-  }, [selectedMarker, currentItems]);  
+  }, [selectedMarker]);  
 
   return (
     <div className='homepage__main'>

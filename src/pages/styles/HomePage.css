@@ -96,7 +96,7 @@
     display: none;
   }
   
-  .results__card {
+  .escuela__card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -116,18 +116,18 @@
     z-index: 3;
   }
   
-  .results__card:hover {
+  .escuela__card:hover {
     transform: translateY(-4px);
     max-height: 19em;
     border-color: #aaa;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
-  .results__card:hover > .results__address {
+  .escuela__card:hover > .escuela__address {
     opacity: 1;
     max-height: 200px;
   }
   
-  .results__address {
+  .escuela__address {
     opacity: 0;
     max-height: 0;
     font-size: 0.78rem;
@@ -135,14 +135,14 @@
     transition: opacity 0.5s ease, max-height 0.5s ease;
   }
   
-  .results__card strong {
+  .escuela__card strong {
     display: block;
     margin-bottom: 5px;
     font-size: 0.9rem;
     color: #333;
   }
   
-  .results__card.selected {
+  .escuela__card.selected {
     background-color: #8d99f6bd;
     box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
   }
@@ -165,17 +165,17 @@
     padding-right: 0.3em;
     gap: 0.3em;
   }
-  .results__card {
+  .escuela__card {
     min-width: 39vw;
     max-width: 55vw;
     height: 6.5em;
     padding: 8px;
     padding-top: 12px;
   }
-  .results__card strong {
+  .escuela__card strong {
     font-size: 0.70rem;
   }
-  .results__address {
+  .escuela__address {
     font-size: 0.55rem;
   }
   

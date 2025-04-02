@@ -71,7 +71,7 @@ const HomePage = () => {
         const itemIndex = validEscuelas.findIndex((_, idx) => idx === selectedMarker);
         if (itemIndex !== -1) {
           const selectedCard = resultsContainerRef.current.querySelector(
-            `.results__card:nth-child(${itemIndex + 1})`
+            `.escuela__card:nth-child(${itemIndex + 1})`
           );
           if (selectedCard) {
             selectedCard.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'center' });
@@ -126,12 +126,12 @@ const HomePage = () => {
   
                 <ul className='cards__container' ref={resultsContainerRef}>
                   {currentItems.map((escuela, index) => (
-                    <li className={`results__card ${selectedMarker === index ? 'selected' : ''}`}
+                    <li className={`escuela__card ${selectedMarker === index ? 'selected' : ''}`}
                       key={escuela.id}
                       onClick={() => handleCardClick(index)}
                     >
-                      <span className='results__name'><strong>{escuela.nombre}</strong></span>
-                      <span className='results__address'>{escuela.domicilio}</span>
+                      <span className='escuela__name'><strong>{escuela.nombre}</strong></span>
+                      <span className='escuela__address'>{escuela.domicilio}</span>
                     </li>
                   ))}
                 </ul>

@@ -14,6 +14,7 @@ const HomePage = () => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const dispatch = useDispatch();
   const resultsContainerRef = useRef();
+  const bannerRef = useRef();
   
   // Access escuelas state from Redux
   const { data, loading, error } = useSelector((state) => state.escuelas);
@@ -74,7 +75,22 @@ const HomePage = () => {
             `.escuela__card:nth-child(${itemIndex + 1})`
           );
           if (selectedCard) {
-            selectedCard.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'center' });
+            const container = resultsContainerRef.current;
+            const cardOffset = selectedCard.offsetLeft;
+            const offset = 117; // space from the left (can adjust as needed)
+          
+            container.scrollTo({
+              left: cardOffset - offset,
+              behavior: 'smooth',
+            });
+
+              // Vertical scroll of the entire banner to top with offset
+            const bannerTop = bannerRef.current.getBoundingClientRect().top + window.scrollY;
+            const offsetY = 16; // push 40px below the top
+            window.scrollTo({
+              top: bannerTop - offsetY,
+              behavior: 'smooth',
+            });
           }
         }
       });
@@ -120,7 +136,7 @@ const HomePage = () => {
           handlePageChange={handlePageChange}
         />
         <div className='resuts__map-ul'>
-          <div className='card__banner-container'>
+          <div className='card__banner-container'  ref={bannerRef}>
             <div className="banner__navigation">
               <button className="prev-button" onClick={() => scrollResults(-1)}>{"<<"}</button>
   

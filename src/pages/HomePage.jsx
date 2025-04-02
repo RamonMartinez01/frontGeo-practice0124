@@ -71,7 +71,7 @@ const HomePage = () => {
         const itemIndex = validEscuelas.findIndex((_, idx) => idx === selectedMarker);
         if (itemIndex !== -1) {
           const selectedCard = resultsContainerRef.current.querySelector(
-            `.results__card:nth-child(${itemIndex + 1})`
+            `.escuela__card:nth-child(${itemIndex + 1})`
           );
           if (selectedCard) {
             selectedCard.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'center' });
@@ -120,18 +120,18 @@ const HomePage = () => {
           handlePageChange={handlePageChange}
         />
         <div className='resuts__map-ul'>
-          <div className='results__ul-div'>
-            <div className="results__navigation">
+          <div className='card__banner-container'>
+            <div className="banner__navigation">
               <button className="prev-button" onClick={() => scrollResults(-1)}>{"<<"}</button>
   
-                <ul className='results__ul' ref={resultsContainerRef}>
+                <ul className='cards__container' ref={resultsContainerRef}>
                   {currentItems.map((escuela, index) => (
-                    <li className={`results__card ${selectedMarker === index ? 'selected' : ''}`}
+                    <li className={`escuela__card ${selectedMarker === index ? 'selected' : ''}`}
                       key={escuela.id}
                       onClick={() => handleCardClick(index)}
                     >
-                      <span className='results__name'><strong>{escuela.nombre}</strong></span>
-                      <span className='results__address'>{escuela.domicilio}</span>
+                      <span className='escuela__name'><strong>{escuela.nombre}</strong></span>
+                      <span className='escuela__address'>{escuela.domicilio}</span>
                     </li>
                   ))}
                 </ul>

@@ -124,7 +124,7 @@ const HomePage = () => {
             <div className="results__navigation">
               <button className="prev-button" onClick={() => scrollResults(-1)}>{"<<"}</button>
   
-                <ul className='results__ul' ref={resultsContainerRef}>
+                <ul className='cards__container' ref={resultsContainerRef}>
                   {currentItems.map((escuela, index) => (
                     <li className={`results__card ${selectedMarker === index ? 'selected' : ''}`}
                       key={escuela.id}

@@ -120,7 +120,7 @@ const HomePage = () => {
           handlePageChange={handlePageChange}
         />
         <div className='resuts__map-ul'>
-          <div className='results__ul-div'>
+          <div className='card__banner-container'>
             <div className="results__navigation">
               <button className="prev-button" onClick={() => scrollResults(-1)}>{"<<"}</button>
   

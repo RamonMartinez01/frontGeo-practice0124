@@ -121,7 +121,7 @@ const HomePage = () => {
         />
         <div className='resuts__map-ul'>
           <div className='card__banner-container'>
-            <div className="results__navigation">
+            <div className="banner__navigation">
               <button className="prev-button" onClick={() => scrollResults(-1)}>{"<<"}</button>
   
                 <ul className='cards__container' ref={resultsContainerRef}>

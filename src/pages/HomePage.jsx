@@ -86,7 +86,7 @@ const HomePage = () => {
 
               // Vertical scroll of the entire banner to top with offset
             const bannerTop = bannerRef.current.getBoundingClientRect().top + window.scrollY;
-            const offsetY = 16; // push 40px below the top
+            const offsetY = 10; // push 40px below the top
             window.scrollTo({
               top: bannerTop - offsetY,
               behavior: 'smooth',
@@ -96,6 +96,35 @@ const HomePage = () => {
       });
     }
   }, [selectedMarker]);  
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          // It's scrolled too far off-screen — scroll it back gently
+          const topOffset = bannerRef.current.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: topOffset - 10,
+            behavior: 'smooth',
+          });
+        }
+      },
+      {
+        root: null,
+        threshold: 0.1,
+      }
+    );
+  
+    if (bannerRef.current) {
+      observer.observe(bannerRef.current);
+    }
+  
+    return () => {
+      if (bannerRef.current) {
+        observer.unobserve(bannerRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className='homepage__main'>
@@ -129,12 +158,13 @@ const HomePage = () => {
             Mostrando {currentItems.length} resultados en esta página
           </span>
         </div>
-
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}  // Total pages from API
-          handlePageChange={handlePageChange}
-        />
+        <div className='pagination__component'>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}  // Total pages from API
+            handlePageChange={handlePageChange}
+          />
+        </div>
         <div className='resuts__map-ul'>
           <div className='card__banner-container'  ref={bannerRef}>
             <div className="banner__navigation">

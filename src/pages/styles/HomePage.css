@@ -31,6 +31,7 @@
     flex-direction: column;
   }  
   .results__ul-div {
+    display: flex;
     width: 100%;
     height: 10em;
     margin-bottom: 0.8em;
@@ -73,6 +74,7 @@
     list-style-type: none;
     width: 100%;
     height: 100%;
+    margin: 0;
     padding-left: 1em;
     padding-right: 1em;
     overflow-y: auto;
@@ -115,7 +117,7 @@
   }
   
   .results__card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-4px);
     max-height: 19em;
     border-color: #aaa;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);

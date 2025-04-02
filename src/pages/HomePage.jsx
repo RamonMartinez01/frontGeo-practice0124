@@ -140,7 +140,7 @@ const HomePage = () => {
             </div>  
           </div>
           <div className='results__map'>
-            <Map currentItems={currentItems}
+            <Map validEscuelas={validEscuelas}
               selectedMarker={selectedMarker}
               setSelectedMarker={setSelectedMarker}
             />

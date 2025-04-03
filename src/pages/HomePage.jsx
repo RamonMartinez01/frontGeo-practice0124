@@ -79,7 +79,7 @@ const HomePage = () => {
           if (selectedCard) {
             const container = resultsContainerRef.current;
             const cardOffset = selectedCard.offsetLeft;
-            const offset = 117; // space from the left (can adjust as needed)
+            const offset = 105; // space from the left (can adjust as needed)
           
             container.scrollTo({
               left: cardOffset - offset,
@@ -166,19 +166,21 @@ const HomePage = () => {
       {error && <p className="error-message">Error: {error}</p>}
 
       <div className='results-info'>
-        <div className='results__total-category'>
-          <span>
-            <h3>{totalEscuelas} resultados </h3>
-          </span>
-          <span>
-            <h3> de "{selectedCategory || "Todas las categorías"}"</h3>
-          </span>
-        </div>
-        <div>
-          <span>
-            Mostrando {currentItems.length} resultados en esta página
-          </span>
-        </div>
+        <section className='results__total'>
+          <div className='results__total-category'>
+            <span>
+              <h3>{totalEscuelas} resultados </h3>
+            </span>
+            <span>
+              <h3> "{selectedCategory || "Todas las categorías"}"</h3>
+            </span>
+          </div>
+          <div className='results__total-thispage'>
+            <span>
+              Mostrando {currentItems.length} resultados en esta página
+            </span>
+          </div>
+        </section>
         <div className='pagination__component'>
           <Pagination
             currentPage={currentPage}

@@ -15,6 +15,8 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const resultsContainerRef = useRef();
   const bannerRef = useRef();
+  const [showScrollCue, setShowScrollCue] = useState(false);
+
   
   // Access escuelas state from Redux
   const { data, loading, error } = useSelector((state) => state.escuelas);
@@ -126,13 +128,32 @@ const HomePage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!bannerRef.current) return;
+
+      const rect = bannerRef.current.getBoundingClientRect();
+      const isNearTop = rect.top >= 20; // distance from the top os the screen
+      setShowScrollCue(!isNearTop);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   return (
     <div className='homepage__main'>
-      <CategoryFilter 
-        selectedCategory={selectedCategory} 
-        setSelectedCategory={setSelectedCategory}
-        setCurrentPage={setCurrentPage}
-      />
+      <div className='category__component-container'>
+        <CategoryFilter 
+          selectedCategory={selectedCategory} 
+          setSelectedCategory={setSelectedCategory}
+          setCurrentPage={setCurrentPage}
+        />
+      </div>
       
       <SearchBar 
         setSearchTerm={setSearchTerm} 
@@ -165,7 +186,7 @@ const HomePage = () => {
             handlePageChange={handlePageChange}
           />
         </div>
-        <div className='resuts__map-ul'>
+        <div className='escuelas__map'>
           <div className='card__banner-container'  ref={bannerRef}>
             <div className="banner__navigation">
               <button className="prev-button" onClick={() => scrollResults(-1)}>{"<<"}</button>
@@ -183,8 +204,23 @@ const HomePage = () => {
                 </ul>
 
               <button className="next-button" onClick={() => scrollResults(1)}>{">>"}</button>
-            </div>  
+            </div>
+            {showScrollCue && (
+              <div className="scroll-cue-arrow">
+                <button
+                  className="scroll-cue-btn"
+                  onClick={scrollToTop}
+                  aria-label="Volver al inicio"
+                  >
+                          
+                  ↓
+
+                </button>
+              </div>
+            )}
+            
           </div>
+          
           <div className='results__map'>
             <Map validEscuelas={validEscuelas}
               selectedMarker={selectedMarker}

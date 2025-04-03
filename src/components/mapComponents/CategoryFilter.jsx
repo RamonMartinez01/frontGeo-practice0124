@@ -1,3 +1,4 @@
+import './Styles/CategoryFilter.css'
 
 const CategoryFilter = ({ selectedCategory, setSelectedCategory, setCurrentPage }) => {
 

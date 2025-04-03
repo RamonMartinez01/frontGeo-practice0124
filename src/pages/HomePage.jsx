@@ -88,7 +88,7 @@ const HomePage = () => {
 
               // Vertical scroll of the entire banner to top with offset
             const bannerTop = bannerRef.current.getBoundingClientRect().top + window.scrollY;
-            const offsetY = 1; // push 1px below the top
+            const offsetY = 15; // push 1px below the top
             window.scrollTo({
               top: bannerTop - offsetY,
               behavior: 'smooth',
@@ -155,11 +155,13 @@ const HomePage = () => {
         />
       </div>
       
-      <SearchBar 
-        setSearchTerm={setSearchTerm} 
-        handleSearch={handleSearch}
-        searchTerm={searchTerm}
-      />
+      <div className='searchbar__component-container'>
+        <SearchBar 
+          setSearchTerm={setSearchTerm} 
+          handleSearch={handleSearch}
+          searchTerm={searchTerm}
+        />
+      </div>
 
        {/* Show loading and error messages */}
        {loading && <p>Cargando datos...</p>}

@@ -18,6 +18,7 @@ const SearchBar = ({ searchTerm, setSearchTerm, handleSearch }) => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder="Buscar por nombre o dirección..."
+         aria-label="Buscar escuela"
       />
 
       {searchTerm.trim() !== "" && ( //Only show "X" when searchTerm is not empty
@@ -25,6 +26,7 @@ const SearchBar = ({ searchTerm, setSearchTerm, handleSearch }) => {
           onClick={clearSearch}
           className="clear-icon"
           type="button" 
+          aria-label="Borrar búsqueda"
         >
         </box-icon>
       )}

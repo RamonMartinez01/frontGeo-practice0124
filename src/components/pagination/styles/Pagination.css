@@ -17,9 +17,11 @@
     border: 1px solid #b2cde3;
     border-radius: 6px;
     padding: 6px 10px;
+    width: 6.7em;
     margin: 0;
     cursor: pointer;
     font-weight: 500;
+
     color: #2e2c4a;
     transition: background-color 0.2s, transform 0.2s;
   }
@@ -61,8 +63,15 @@
     border-radius: 0px;
   }
   
+  .pagination button {
+    width: 7.7em;
+    font-weight: 300;
+    font-size: 0.74rem;
+  }
   .pagination span {
     margin: 0.2rem 0;
     font-size: 0.75rem;
   }
+
+
 }

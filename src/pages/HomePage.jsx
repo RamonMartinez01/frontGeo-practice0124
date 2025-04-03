@@ -15,6 +15,8 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const resultsContainerRef = useRef();
   const bannerRef = useRef();
+  const [showScrollCue, setShowScrollCue] = useState(false);
+
   
   // Access escuelas state from Redux
   const { data, loading, error } = useSelector((state) => state.escuelas);
@@ -86,7 +88,7 @@ const HomePage = () => {
 
               // Vertical scroll of the entire banner to top with offset
             const bannerTop = bannerRef.current.getBoundingClientRect().top + window.scrollY;
-            const offsetY = 16; // push 40px below the top
+            const offsetY = 10; // push 40px below the top
             window.scrollTo({
               top: bannerTop - offsetY,
               behavior: 'smooth',
@@ -97,13 +99,61 @@ const HomePage = () => {
     }
   }, [selectedMarker]);  
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          // It's scrolled too far off-screen — scroll it back gently
+          const topOffset = bannerRef.current.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: topOffset - 10,
+            behavior: 'smooth',
+          });
+        }
+      },
+      {
+        root: null,
+        threshold: 0.1,
+      }
+    );
+  
+    if (bannerRef.current) {
+      observer.observe(bannerRef.current);
+    }
+  
+    return () => {
+      if (bannerRef.current) {
+        observer.unobserve(bannerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!bannerRef.current) return;
+
+      const rect = bannerRef.current.getBoundingClientRect();
+      const isNearTop = rect.top >= 20; // distance from the top os the screen
+      setShowScrollCue(!isNearTop);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   return (
     <div className='homepage__main'>
-      <CategoryFilter 
-        selectedCategory={selectedCategory} 
-        setSelectedCategory={setSelectedCategory}
-        setCurrentPage={setCurrentPage}
-      />
+      <div className='category__component-container'>
+        <CategoryFilter 
+          selectedCategory={selectedCategory} 
+          setSelectedCategory={setSelectedCategory}
+          setCurrentPage={setCurrentPage}
+        />
+      </div>
       
       <SearchBar 
         setSearchTerm={setSearchTerm} 
@@ -129,13 +179,14 @@ const HomePage = () => {
             Mostrando {currentItems.length} resultados en esta página
           </span>
         </div>
-
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}  // Total pages from API
-          handlePageChange={handlePageChange}
-        />
-        <div className='resuts__map-ul'>
+        <div className='pagination__component'>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}  // Total pages from API
+            handlePageChange={handlePageChange}
+          />
+        </div>
+        <div className='escuelas__map'>
           <div className='card__banner-container'  ref={bannerRef}>
             <div className="banner__navigation">
               <button className="prev-button" onClick={() => scrollResults(-1)}>{"<<"}</button>
@@ -153,8 +204,23 @@ const HomePage = () => {
                 </ul>
 
               <button className="next-button" onClick={() => scrollResults(1)}>{">>"}</button>
-            </div>  
+            </div>
+            {showScrollCue && (
+              <div className="scroll-cue-arrow">
+                <button
+                  className="scroll-cue-btn"
+                  onClick={scrollToTop}
+                  aria-label="Volver al inicio"
+                  >
+                          
+                  ↓
+
+                </button>
+              </div>
+            )}
+            
           </div>
+          
           <div className='results__map'>
             <Map validEscuelas={validEscuelas}
               selectedMarker={selectedMarker}

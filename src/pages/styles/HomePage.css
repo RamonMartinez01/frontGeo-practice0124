@@ -26,7 +26,7 @@
     margin-bottom: 10px;
   }
 
-  .results__map-ul {
+  .escuelas__map {
     display: flex;
     flex-direction: column;
   }  
@@ -35,6 +35,10 @@
     width: 100%;
     height: 10em;
     margin-bottom: 0.8em;
+    
+      scroll-margin-top: 0.5rem;
+      margin-top: 0.5rem;
+      position: relative;
   }
   .banner__navigation {
     display: flex;
@@ -79,13 +83,13 @@
     padding-right: 1em;
     overflow-x: auto;
     gap: 0.5em;
-    z-index: 100;
+    z-index: 1;
     background-color: rgb(182, 215, 240);
     scroll-behavior: smooth;
     right: 0;
     bottom:  100;
   }
-  .results__map {
+  .map__component-container {
     width: 100%;
     height: 100%;
     z-index: -1;
@@ -144,6 +148,40 @@
   .escuela__card.selected {
     background-color: #8d99f6bd;
     box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+
+  .scroll-cue-arrow {
+    position: absolute;
+    top: calc(90.9% - 0.1rem); /* Slightly overlaps bottom of banner */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2.2rem;
+    height: 1.3rem;
+    background-color: rgb(182, 215, 240); /* Match banner background */
+    color: #0f0e2c; /* Match button/nav text color */
+    font-weight: bolder;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.75;
+    z-index: 5;
+    cursor: default;
+    pointer-events: auto; 
+  }
+
+  .scroll-cue-btn {
+    all: unset;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #5c69c7bd;
+    cursor: pointer;
+  }
+  
+  .results__map {
+    z-index: 2;
   }
 
 

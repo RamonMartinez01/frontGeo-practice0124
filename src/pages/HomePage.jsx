@@ -155,11 +155,13 @@ const HomePage = () => {
         />
       </div>
       
-      <SearchBar 
-        setSearchTerm={setSearchTerm} 
-        handleSearch={handleSearch}
-        searchTerm={searchTerm}
-      />
+      <div className='searchbar__component-container'>
+        <SearchBar 
+          setSearchTerm={setSearchTerm} 
+          handleSearch={handleSearch}
+          searchTerm={searchTerm}
+        />
+      </div>
 
        {/* Show loading and error messages */}
        {loading && <p>Cargando datos...</p>}

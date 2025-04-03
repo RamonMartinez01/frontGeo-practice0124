@@ -8,7 +8,7 @@ const Pagination = ({ currentPage, totalPages, handlePageChange }) => {
         {"<"} Anterior
       </button>
 
-      <span>Página {currentPage} de {totalPages}</span>
+      <span>Página <strong>{currentPage}</strong> de {totalPages}</span>
 
       <button disabled={currentPage === totalPages} onClick={() => handlePageChange(currentPage + 1)}>
         Siguiente {">"}

@@ -35,9 +35,8 @@
     width: 100%;
     height: 10em;
     margin-bottom: 0.8em;
-    
+    margin-top: 0rem;
       scroll-margin-top: 0.5rem;
-      margin-top: 0.5rem;
       position: relative;
   }
   .banner__navigation {

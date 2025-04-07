@@ -64,7 +64,7 @@
     height: 10em;
     margin-bottom: 0.8em;
     margin-top: 0rem;
-      scroll-margin-top: 0.5rem;
+      scroll-margin-top: 0.1rem;
       position: relative;
   }
   .banner__navigation {

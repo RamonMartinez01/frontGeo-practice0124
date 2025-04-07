@@ -88,7 +88,7 @@ const HomePage = () => {
 
               // Vertical scroll of the entire banner to top with offset
             const bannerTop = bannerRef.current.getBoundingClientRect().top + window.scrollY;
-            const offsetY = 5; // push 1px below the top
+            const offsetY = 3; // push 1px below the top
             window.scrollTo({
               top: bannerTop - offsetY,
               behavior: 'smooth',
@@ -106,7 +106,7 @@ const HomePage = () => {
           // It's scrolled too far off-screen — scroll it back gently
           const topOffset = bannerRef.current.getBoundingClientRect().top + window.scrollY;
           window.scrollTo({
-            top: topOffset - 10,
+            top: topOffset - 15,
             behavior: 'smooth',
           });
         }

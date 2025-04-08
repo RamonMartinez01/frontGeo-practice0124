@@ -60,6 +60,8 @@ Repositorio del frontend del proyecto Geo-Escuelas, desarrollado en React.js. Es
 
  -- El backend está contenerizado y desplegado en AWS ECR.
 
+ -- Puedes conectarte a otra API en el archivo apiConfig.js en ```src/utils/apiConfig.js```
+
  
 **VI - Licencia**
 

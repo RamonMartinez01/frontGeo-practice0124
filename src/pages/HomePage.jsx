@@ -179,7 +179,7 @@ const HomePage = () => {
           </div>
           <div className='results__total-thispage'>
             <span>
-              Mostrando {currentItems.length} resultados en esta página
+              Mostrando <strong>{currentItems.length}</strong> resultados en esta página
             </span>
           </div>
         </section>

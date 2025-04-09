@@ -13,7 +13,7 @@ const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const dispatch = useDispatch();
-  const resultsContainerRef = useRef();
+  const cardsContainerRef = useRef();
   const bannerRef = useRef();
   const selectedCardRef = useRef(null);
   const [showScrollCue, setShowScrollCue] = useState(false);
@@ -61,12 +61,48 @@ const HomePage = () => {
     ));
   };
 
+   //Función para effecto rebote con CSS
+   const triggerBounce = () => {
+    const container =  cardsContainerRef.current;
+    if (!container) return;
+
+    container.classList.add("bounce");
+    setTimeout(() => {
+      container.classList.remove("bounce");
+    }, 500);
+  }
+
+  // FUnción para los botones del banner de cards
   const scrollResults = (direction) => {
-    const scrollContainer = resultsContainerRef.current;
-    const scrollAmount = 200; // Adjust this value as needed
-    scrollContainer.scrollLeft += direction * scrollAmount;
+    const scrollContainer = cardsContainerRef.current;
+    if (!scrollContainer) return;
+
+    const scrollAmount = 200; // Adjust this value to move the cards as needed
+    const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+    const newScrollLeft = scrollContainer.scrollLeft + direction * scrollAmount;
+
+    //const tolerance
+
+    if (newScrollLeft < 0) {
+      scrollContainer.scrollLeft = 0;
+      triggerBounce();// Rebote en el extremo izquierdo
+      return;
+    }
+
+    if (newScrollLeft + scrollAmount > maxScrollLeft) {
+      scrollContainer.scrollLeft = maxScrollLeft;
+      triggerBounce();// Rebote en el extremo derecha
+      return;
+    }
+
+    // Scroll normal
+    scrollContainer.scrollTo({
+      left: newScrollLeft,
+      behavior: 'smooth',
+    });
   };
 
+ 
   // Scroll to selected card when selectedMarker changes
   useEffect(() => {
     if (selectedMarker !== null && selectedCardRef.current) {
@@ -183,7 +219,7 @@ const HomePage = () => {
             <div className="banner__navigation" >
               <button className="prev-button" onClick={() => scrollResults(-1)}>{"<<"}</button>
   
-              <ul className='cards__container'  ref={resultsContainerRef}>
+              <ul className='cards__container'  ref={cardsContainerRef}>
                 {currentItems.map((escuela, index) => (
                   <li 
                     ref={index === selectedMarker ? selectedCardRef : null}

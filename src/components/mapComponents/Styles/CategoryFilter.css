@@ -7,6 +7,11 @@
   }
   
   .filter-bar select {
+    /*quita la flecha (chevron que viene con el select*/
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -18,6 +23,12 @@
     width: 100%;
     max-width: 400px;
     transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+    /*Imagen de flecha*/
+    background-image: url("/custom-arrow.jpg"); 
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 16px;
   }
   
   .filter-bar select:focus {
@@ -28,7 +39,7 @@
 
   @media (max-width: 768px) {
     .filter-bar select {
-      font-size: 14px;
+      font-size: 0.8rem;
       padding: 8px 18px;
     }
   }

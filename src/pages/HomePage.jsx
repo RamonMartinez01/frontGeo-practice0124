@@ -15,6 +15,7 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const resultsContainerRef = useRef();
   const bannerRef = useRef();
+  const selectedCardRef = useRef(null);
   const [showScrollCue, setShowScrollCue] = useState(false);
 
   
@@ -66,35 +67,22 @@ const HomePage = () => {
     scrollContainer.scrollLeft += direction * scrollAmount;
   };
 
-  // Scroll to selected card when validEscuelas or selectedMarker changes
+  // Scroll to selected card when selectedMarker changes
   useEffect(() => {
-    if (selectedMarker !== null && resultsContainerRef.current) {
-      // Ensure the DOM has updated before scrolling
-      requestAnimationFrame(() => {
-        const itemIndex = validEscuelas.findIndex((_, idx) => idx === selectedMarker);
-        if (itemIndex !== -1) {
-          const selectedCard = resultsContainerRef.current.querySelector(
-            `.escuela__card:nth-child(${itemIndex + 1})`
-          );
-          if (selectedCard) {
-            const container = resultsContainerRef.current;
-            const cardOffset = selectedCard.offsetLeft;
-            const offset = 105; // space from the left (can adjust as needed)
-          
-            container.scrollTo({
-              left: cardOffset - offset,
-              behavior: 'smooth',
-            });
-
-              // Vertical scroll of the entire banner to top with offset
-            const bannerTop = bannerRef.current.getBoundingClientRect().top + window.scrollY;
-            const offsetY = 1; // push 1px below the top
-            window.scrollTo({
-              top: bannerTop - offsetY,
-              behavior: 'smooth',
-            });
-          }
-        }
+    if (selectedMarker !== null && selectedCardRef.current) {
+      selectedCardRef.current.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest"
+      });      
+    }
+        // Vertical scroll of the entire banner to top with offset
+    if (bannerRef.current) {  
+      const bannerTop = bannerRef.current.getBoundingClientRect().top + window.scrollY;
+      const offsetY = 1; // push 1px below the top
+      window.scrollTo({
+        top: bannerTop - offsetY,
+        behavior: 'smooth',
       });
     }
   }, [selectedMarker]);  
@@ -191,21 +179,23 @@ const HomePage = () => {
           />
         </div>
         <div className='escuelas__map'>
-          <div className='card__banner-container'  ref={bannerRef}>
-            <div className="banner__navigation">
+          <div className='card__banner-container' ref={bannerRef}>
+            <div className="banner__navigation" >
               <button className="prev-button" onClick={() => scrollResults(-1)}>{"<<"}</button>
   
-                <ul className='cards__container' ref={resultsContainerRef}>
-                  {currentItems.map((escuela, index) => (
-                    <li className={`escuela__card ${selectedMarker === index ? 'selected' : ''}`}
-                      key={escuela.id}
-                      onClick={() => handleCardClick(index)}
-                    >
-                      <span className='escuela__name'><strong>{escuela.nombre}</strong></span>
-                      <span className='escuela__address'>{escuela.domicilio}</span>
-                    </li>
-                  ))}
-                </ul>
+              <ul className='cards__container'  ref={resultsContainerRef}>
+                {currentItems.map((escuela, index) => (
+                  <li 
+                    ref={index === selectedMarker ? selectedCardRef : null}
+                    className={`escuela__card ${selectedMarker === index ? 'selected' : ''}`}
+                    key={escuela.id}
+                    onClick={() => handleCardClick(index)}
+                  >
+                    <span className='escuela__name'><strong>{escuela.nombre}</strong></span>
+                    <span className='escuela__address'>{escuela.domicilio}</span>
+                  </li>
+                ))}
+              </ul>
 
               <button className="next-button" onClick={() => scrollResults(1)}>{">>"}</button>
             </div>

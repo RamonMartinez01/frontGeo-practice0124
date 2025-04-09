@@ -129,6 +129,7 @@
   z-index: 1;
   background-color: rgb(182, 215, 240);
   scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
   right: 0;
   bottom: 100;
 }

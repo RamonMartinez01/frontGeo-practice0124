@@ -116,7 +116,7 @@
   margin: 0 10px;
 }
 
-/*Efecto rebote en el banner de cartas*/
+/*Efecto rebote en el banner de cartas, para botones*/
 @keyframes gentleBounce {
   0% {
     transform: translateX(0);
@@ -135,7 +135,26 @@
 .cards__container.bounce {
   animation: gentleBounce 0.5s ease-in-out;
 }
-/*termina efecto rebote*/
+/*termina efecto rebote para botones*/
+
+/* Efecto rebote  
+@keyframes bounce-left {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(12px); }
+  100% { transform: translateX(0); }
+}
+@keyframes bounce-right {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-12px); }
+  100% { transform: translateX(0); }
+}
+.cards__container.bounce-left {
+  animation: bounce-left 0.3s ease;
+}
+.cards__container.bounce-right {
+  animation: bounce-right 0.3s ease;
+}
+Termina efecto rebote */
 
 
 .cards__container {

@@ -17,7 +17,7 @@ const HomePage = () => {
   const bannerRef = useRef();
   const selectedCardRef = useRef(null);
   const [showScrollCue, setShowScrollCue] = useState(false);
-
+  const touchStartXRef = useRef(null);
   
   // Access escuelas state from Redux
   const { data, loading, error } = useSelector((state) => state.escuelas);
@@ -62,14 +62,13 @@ const HomePage = () => {
   };
 
    //Función para effecto rebote con CSS
-   const triggerBounce = () => {
+   const triggerBounce = (direction = 'left') => {
     const container =  cardsContainerRef.current;
     if (!container) return;
 
-    container.classList.add("bounce");
-    setTimeout(() => {
-      container.classList.remove("bounce");
-    }, 500);
+    container.classList.remove("bounce", 'bounce-left', 'bounce-right');
+    void container.offsetWidth;
+    container.classList.add('bounce', `bounce-${direction}`);
   }
 
   // FUnción para los botones del banner de cards
@@ -81,17 +80,15 @@ const HomePage = () => {
     const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
     const newScrollLeft = scrollContainer.scrollLeft + direction * scrollAmount;
 
-    //const tolerance
-
     if (newScrollLeft < 0) {
       scrollContainer.scrollLeft = 0;
-      triggerBounce();// Rebote en el extremo izquierdo
+      triggerBounce('left');// Rebote en el extremo izquierdo
       return;
     }
 
     if (newScrollLeft + scrollAmount > maxScrollLeft) {
       scrollContainer.scrollLeft = maxScrollLeft;
-      triggerBounce();// Rebote en el extremo derecha
+      triggerBounce('right');// Rebote en el extremo derecha
       return;
     }
 
@@ -102,6 +99,39 @@ const HomePage = () => {
     });
   };
 
+    //Scroll on touch screens
+  useEffect(() => {
+    const container = cardsContainerRef.current;
+    if (!container) return;
+  
+    const handleTouchStart = (e) => {
+      touchStartXRef.current = e.touches[0].clientX;
+    };
+  
+    const handleTouchEnd = (e) => {
+      const touchEndX = e.changedTouches[0].clientX;
+      const deltaX = touchEndX - touchStartXRef.current;
+  
+      const scrollLeft = container.scrollLeft;
+      const maxScrollLeft = container.scrollWidth - container.clientWidth;
+  
+      if (scrollLeft <= 0 && deltaX > 30) {
+        // Rebote izquierda
+        triggerBounce('left');
+      } else if (scrollLeft >= maxScrollLeft && deltaX < -30) {
+        // Rebote derecha
+        triggerBounce('right');
+      }
+    };
+  
+    container.addEventListener('touchstart', handleTouchStart);
+    container.addEventListener('touchend', handleTouchEnd);
+  
+    return () => {
+      container.removeEventListener('touchstart', handleTouchStart);
+      container.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, []);//End the scroll on touch screens 
  
   // Scroll to selected card when selectedMarker changes
   useEffect(() => {

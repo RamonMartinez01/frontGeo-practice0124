@@ -114,11 +114,12 @@ const HomePage = () => {
   
       const scrollLeft = container.scrollLeft;
       const maxScrollLeft = container.scrollWidth - container.clientWidth;
+      const threshold = 10; //tolerancia para aplicar en los extremos
   
       if (scrollLeft <= 0 && deltaX > 30) {
         // Rebote izquierda
         triggerBounce('left');
-      } else if (scrollLeft >= maxScrollLeft && deltaX < -30) {
+      } else if ((scrollLeft + threshold) >= maxScrollLeft && deltaX < -30) {
         // Rebote derecha
         triggerBounce('right');
       }

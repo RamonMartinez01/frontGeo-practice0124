@@ -225,7 +225,7 @@ const HomePage = () => {
             
           </div>
           
-          <div className='results__map'>
+          <div className='map__component'>
             <Map validEscuelas={validEscuelas}
               selectedMarker={selectedMarker}
               setSelectedMarker={setSelectedMarker}
